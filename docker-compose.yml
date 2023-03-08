@@ -1,0 +1,24 @@
+version: '3'
+services:
+  web:
+    build: .
+    depends_on:
+      - notedb
+    container_name: web
+    volumes:
+      - .:/app
+    ports:
+     - "8000:8000"
+  notedb:
+    image: postgres
+    container_name: notedb
+    ports:
+      - '6500:5432'
+    restart: always
+    env_file:
+      - ./.env
+    volumes:
+     - postgres-db:/var/lib/postgresql/data
+
+volumes:
+  postgres-db:
